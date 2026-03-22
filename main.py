@@ -1,9 +1,18 @@
+import os
 import numpy as np
 import tensorflow as tf
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 import io
+import gdown
+
+MODEL_PATH = "agritech_model.keras"
+GDRIVE_FILE_ID = "15KXfewEtyRMWt_mCV2-oDUB0fruMhKDZ"
+
+if not os.path.exists(MODEL_PATH):
+    print("Downloading model from Google Drive...")
+    gdown.download(f"https://drive.google.com/uc?id={GDRIVE_FILE_ID}", MODEL_PATH, quiet=False)
 
 app = FastAPI()
 
@@ -14,7 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = tf.keras.models.load_model("agritech_model.keras")
+model = tf.keras.models.load_model(MODEL_PATH)
 
 CLASS_NAMES = [
     "Corn - Cercospora Leaf Spot / Gray Leaf Spot",
