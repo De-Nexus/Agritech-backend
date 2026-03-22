@@ -1,0 +1,10 @@
+venv/
+env/
+tf-env/
+__pycache__/
+*.pyc
+*.pycache
+node_modules/
+.DS_Store
+*.keras
+.env
