@@ -4,6 +4,7 @@ from PIL import Image
 import io
 from ml_model import model, CLASS_NAMES
 from dependencies import get_current_user
+from ai_service import get_disease_info
 import models
 
 router = APIRouter()
@@ -28,7 +29,12 @@ async def predict(
     predicted_class = CLASS_NAMES[predicted_index]
     confidence = float(predictions[0][predicted_index])
 
+    disease_info = get_disease_info(predicted_class)
+
     return {
         "disease": predicted_class,
         "confidence": round(confidence * 100, 2),
+        "causes": disease_info.get("causes", []),
+        "treatments": disease_info.get("treatments", []),
+        "prevention": disease_info.get("prevention", []),
     }
