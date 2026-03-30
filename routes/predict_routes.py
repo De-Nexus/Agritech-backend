@@ -29,6 +29,12 @@ async def predict(
     predicted_class = CLASS_NAMES[predicted_index]
     confidence = float(predictions[0][predicted_index])
 
+    if confidence < 0.5:
+        raise HTTPException(
+            status_code=422,
+            detail="The plant could not be identified. Only Corn, Pepper Bell, Potato, and Tomato leaves are supported."
+        )
+
     disease_info = get_disease_info(predicted_class)
 
     return {
