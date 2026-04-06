@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 ENV = os.getenv("ENV", "development")
 
 if ENV == "production":
